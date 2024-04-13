@@ -1,0 +1,56 @@
+[
+    {
+        "id": 12,
+        "name": "Bluey",
+        "imageUrl": "bluey-image.jpg",
+        "price" : "5.99"
+    },
+    {
+        "id": 13,
+        "name": "Yellow",
+        "imageUrl": "yellow-image.jpg",
+        "price" : "7.99"
+
+    },
+    {
+        "id": 14,
+        "name": "Amano Shrimp",
+        "imageUrl": "amano-image.jpg",
+        "price" : "5.99"
+
+    },
+    {
+        "id": 15,
+        "name": "Ghost Shrimp",
+        "imageUrl": "ghost-shrimp.jpg",
+        "price" : "1.99"
+
+    },
+    {
+        "id": 16,
+        "name": "Red Rili Shrimp",
+        "imageUrl": "red-rili-shrimp.jpg",
+        "price" : "25.99"
+
+    },
+    {
+        "id": 17,
+        "name": "Crystal Red Shrimp",
+        "imageUrl": "crystal-red-shrimp.jpg",
+        "price" : "15.99"
+
+    },
+    {
+        "id": 18,
+        "name": "Vampire Shrimp",
+        "imageUrl": "vampire-shrimp.jpg",
+        "price" : "10.99"
+
+    },
+    {
+        "id": 19,
+        "name": "Mantis Shrimp",
+        "imageUrl": "mantis-shrimp.jpg", 
+        "price": "54.99"
+    }
+]
