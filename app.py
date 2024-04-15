@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, Response, send_file
 from flask_cors import CORS
 import json
 from searchHelper import fuzzy_search
+from security import generate_token, validate_token
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -67,6 +68,11 @@ def getImg(shrimp_id):
       return send_file(image_path, mimetype=mime_type)
     except:
       return Response(status=500)
-
+@app.route('/user/login', methods=["POST"])
+def login():
+  username = request.json['username']
+  password = request.json['password']
+  return generate_token(username,password)
+  
 if __name__ == '__main__':
     app.run(debug=True)
