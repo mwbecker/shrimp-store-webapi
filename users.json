@@ -1,0 +1,17 @@
+[
+    {
+        "username": "mwbecker",
+        "password": "password",
+        "email": "test@test.com"
+    },
+    {
+        "username": "test",
+        "password": "password",
+        "email": "test@test.com"
+    },
+    {
+        "username": "mwbecker1999",
+        "password": "password-test",
+        "email": "hemicharger12@gmail.com"
+    }
+]

@@ -16,3 +16,9 @@ def validate_token(token):
         return True
     except:
         return False
+    
+def check_credentials(users, username, password):
+    for user in users:
+        if user.get('username') == username and user.get('password') == password:
+            return True
+    return False
