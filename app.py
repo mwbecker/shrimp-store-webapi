@@ -21,17 +21,22 @@ def index():
     shrimps_data.insert(ind, shrimp)
     db_commit(shrimps_data, 'shrimps.json')
     return Response(status=200)
-  
   elif request.method == 'POST':
-    shrimp_name = request.json['name']
+    print(dict(request.form))
+    shrimp_name = request.form['name']
+    file = request.files['file']
+    filename = f"{shrimp_name.replace(' ', '-').lower()}-image.jpg"
     max_id = max(shrimps_data, key=lambda x: x["id"])["id"]      
     new_object = (
          {
            'id':max_id+1,
-           'name': shrimp_name
+           'name': shrimp_name,
+           'imageUrl': filename,
+           'price': '0.00'
          }
     )
     shrimps_data.append(new_object)
+    file.save(f'{image_folder}/{filename}')
     db_commit(shrimps_data, 'shrimps.json')
     return jsonify(new_object)
       
@@ -58,18 +63,18 @@ def search():
   
 @app.route('/imgs/<int:shrimp_id>')
 def getImg(shrimp_id):
-    shrimp = list(filter(lambda shrimp: shrimp['id'] == shrimp_id, shrimps_data))[0]
-
-    image_path = image_folder + "/" + shrimp['imageUrl']
-    
-    # Set the MIME type to JPEG
-    mime_type = 'image/jpeg'
-    
-    # Return the image file
+   # Return the image file
     try:
+      shrimp = list(filter(lambda shrimp: shrimp['id'] == shrimp_id, shrimps_data))[0]
+
+      image_path = image_folder + "/" + shrimp['imageUrl']
+      
+      # Set the MIME type to JPEG
+      mime_type = 'image/jpeg'
       return send_file(image_path, mimetype=mime_type)
     except:
       return Response(status=500)
+    
 @app.route('/user/login', methods=["POST"])
 def login():
   username = request.json['username']
