@@ -3,17 +3,18 @@ from flask import Flask, jsonify, request, Response, send_file
 from flask_cors import CORS
 import json
 from searchHelper import fuzzy_search
-from security import generate_token, validate_token, check_credentials
+from security import validate_token
 from db_helper import shrimps_data, users_data, db_commit
+import os
 
 app = Flask(__name__)
 cors = CORS(app)
+google_client_id = os.environ['GOOGLE_CLIENT_ID']
 
 @app.route('/shrimps', methods=["GET", "PUT", "POST"])
 def index():
   if request.method == 'GET':
     return jsonify(shrimps_data)
-  
   elif request.method == 'PUT':
     shrimp = request.json
     ind = next((index for index, d in enumerate(shrimps_data) if d.get('id') == shrimp['id']))
@@ -55,7 +56,7 @@ def get_shrimp_by_id(shrimp_id):
     db_commit(shrimps_data, 'shrimps.json')
     return Response(status=200)
 
-@app.route('/shrimps/', methods=["GET", "PUT", "POST"])
+@app.route('/shrimps/', methods=["GET"])
 def search():
   search_name = request.args.get('name')
   if search_name is not None:
@@ -75,28 +76,15 @@ def getImg(shrimp_id):
     except:
       return Response(status=500)
     
-@app.route('/user/login', methods=["POST"])
-def login():
-  username = request.json['username']
-  password = request.json['password']
-  if check_credentials(users_data, username, password):
-    return generate_token(username,password)
-  else:
-    return Response(status=401)
-
-@app.route('/user/register', methods=["POST"])
-def register():
-  username = request.json['username']
-  password = request.json['password']
-  email = request.json['email']
-  users_data.append({
-     'username': username,
-     'password' : password,
-     'email' : email
-  })
-  db_commit(users_data, 'users.json')
-  return generate_token(username,password)
-  
+@app.route('/validateUserLogin', methods=['GET'])
+def validateUserLogin():
+   token  = request.headers['Authorization']
+   res = validate_token(token, google_client_id)
+   if res : 
+     return Response(status=200)
+   else:
+     return Response(status=401)
+   
 if __name__ == '__main__':
   image_folder = 'assets/images'
   app.run(debug=True)

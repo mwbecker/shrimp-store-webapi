@@ -1,0 +1,2 @@
+export GOOGLE_CLIENT_ID='285390621776-jhvetpj89elglegebfr4ufkjafi2np7v.apps.googleusercontent.com'
+python3 app.py
